@@ -763,6 +763,7 @@ extension RecordAR {
         renderer.ARcontentMode = contentMode
 
         guard let buffer = renderer.buffer else { return }
+        guard let originalImage = renderer.image else { return }
         guard let rawBuffer = renderer.rawBuffer else {
             logAR.message("ERROR:- An error occurred while rendering the camera's main buffers.")
             return
@@ -776,8 +777,7 @@ extension RecordAR {
             
             var time: CMTime { return CMTime(seconds: renderer.time, preferredTimescale: 1000000) }
             
-            self.renderAR?.frame(didRender: buffer, with: time, using: rawBuffer)
-
+            self.renderAR?.frame(didRender: buffer, with: time, using: rawBuffer, originalImage: originalImage)
             //gif images writing
             if self.isRecordingGIF {
                 self.gifWriterQueue.sync {

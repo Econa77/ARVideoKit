@@ -86,11 +86,10 @@ struct RenderAR {
             return CGSize(width: width, height: height)
         }
     }
-    
-    var buffer: CVPixelBuffer? {
+
+    var image: UIImage? {
         if view is ARSCNView {
             guard let size = bufferSize else { return nil }
-            //UIScreen.main.bounds.size
             var renderedFrame: UIImage?
             pixelsQueue.sync {
                 renderedFrame = renderEngine.snapshot(atTime: self.time, with: size, antialiasingMode: .none)
@@ -99,8 +98,7 @@ struct RenderAR {
             } else {
                 renderedFrame = renderEngine.snapshot(atTime: time, with: size, antialiasingMode: .none)
             }
-            guard let buffer = renderedFrame!.buffer else { return nil }
-            return buffer
+            return renderedFrame
         } else if view is ARSKView {
             guard let size = bufferSize else { return nil }
             var renderedFrame: UIImage?
@@ -110,8 +108,7 @@ struct RenderAR {
             if renderedFrame == nil {
                 renderedFrame = renderEngine.snapshot(atTime: time, with: size, antialiasingMode: .none).rotate(by: 180)
             }
-            guard let buffer = renderedFrame!.buffer else { return nil }
-            return buffer;
+            return renderedFrame
         } else if view is SCNView {
             let size = UIScreen.main.bounds.size
             var renderedFrame: UIImage?
@@ -122,9 +119,11 @@ struct RenderAR {
             } else {
                 renderedFrame = renderEngine.snapshot(atTime: time, with: size, antialiasingMode: .none)
             }
-            guard let buffer = renderedFrame!.buffer else { return nil }
-            return buffer
+            return renderedFrame
         }
         return nil
+    }
+    var buffer: CVPixelBuffer? {
+        return image?.buffer
     }
 }
