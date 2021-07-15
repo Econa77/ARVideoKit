@@ -58,7 +58,11 @@ import PhotosUI
     /**
      An object that allow customizing the video frame per second rate. Default is `.auto`.
      */
-    @objc public var fps: ARVideoFrameRate = .auto
+    @objc public var fps: ARVideoFrameRate = .auto {
+        didSet {
+            gpuLoop.preferredFramesPerSecond = fps.rawValue
+        }
+    }
     /**
      An object that allow customizing the video orientation. Default is `.auto`.
      */
