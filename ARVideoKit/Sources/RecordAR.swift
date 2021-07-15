@@ -290,14 +290,6 @@ import PhotosUI
 
 
     //MARK: - Public methods for capturing videos, photos, Live Photos, and GIFs
-
-    /// A method that renders a photo 🌄 and returns it as `UIImage`.
-    @objc public func photo() -> UIImage {
-        if let buffer = renderer.buffer {
-            return imageFromBuffer(buffer: buffer)
-        }
-        return UIImage()
-    }
     /**
      A method that renders a `PHLivePhoto` 🎇 and returns `PHLivePhotoPlus` in the completion handler.
      
@@ -762,8 +754,8 @@ extension RecordAR {
 
         renderer.ARcontentMode = contentMode
 
-        guard let buffer = renderer.buffer else { return }
         guard let originalImage = renderer.image else { return }
+        guard let buffer = originalImage.buffer else { return }
         guard let rawBuffer = renderer.rawBuffer else {
             logAR.message("ERROR:- An error occurred while rendering the camera's main buffers.")
             return

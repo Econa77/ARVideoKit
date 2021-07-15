@@ -31,7 +31,7 @@ struct RenderAR {
             guard let rawBuffer = view.session.currentFrame?.capturedImage else { return nil }
             return rawBuffer
         } else if view is SCNView {
-            return buffer
+            return image?.buffer
         }
         return nil
     }
@@ -122,8 +122,5 @@ struct RenderAR {
             return renderedFrame
         }
         return nil
-    }
-    var buffer: CVPixelBuffer? {
-        return image?.buffer
     }
 }
