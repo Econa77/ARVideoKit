@@ -20,6 +20,10 @@ import Foundation
 @objc public enum ARVideoFrameRate: Int {
     /// The framework automatically sets the most appropriate `FPS` based on the device support.
     case auto = 0
+    /// Sets the `FPS` to 10 frames per second.
+    case fps10 = 10
+    /// Sets the `FPS` to 20 frames per second.
+    case fps20 = 20
     /// Sets the `FPS` to 30 frames per second.
     case fps30 = 30
     /// Sets the `FPS` to 60 frames per second.
